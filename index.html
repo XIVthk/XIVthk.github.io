@@ -1,29 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-    <title>XVIthk - Fifteen的小说</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XVIthk - Fifteen的暗黑文学仓库</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: auto; padding: 20px; }
-        a { color: #ff5555; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        /* 基础重置与暗黑主题 */
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #e6e6e6;
+            --text-secondary: #b3b3b3;
+            --accent: #ff5555;
+            --accent-hover: #ff7777;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        /* 布局容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* 页头样式 */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .site-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        
+        .site-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 警告提示 */
+        .warning {
+            background-color: rgba(255, 85, 85, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        /* 作品列表样式 */
+        .works-list {
+            list-style: none;
+        }
+        
+        .work-item {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .work-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .work-title {
+            padding: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #444;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .work-title::before {
+            content: "📖";
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .chapter-list {
+            list-style: none;
+            padding: 0.5rem 0;
+        }
+        
+        .chapter-item {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chapter-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+        
+        .chapter-link:hover {
+            color: var(--accent-hover);
+        }
+        
+        .chapter-link::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .site-title {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>欢迎来到 Fifteen 的创作空间。</h1>
-    <p>这里存放着一些小说作品。在查看前，请确保你已满 18 周岁。</p>
-    
-    <ul>
-        <li>
-            <strong>《d20》系列</strong>
-            <ul>
-                <li><a href="d20 - 01~07.pdf">d20 - part01</a></li>
-                <li><a href="d20 - 08~10.pdf">d20 - part02</a></li>
-                <li><a href="d20 - 11~14.pdf">d20 - part03</a></li>
-                <li><a href="d20 - 15~18.pdf">d20 - part04</a></li>
-                <li><a href="d20 - After18.pdf">d20 - allafter - part05</a></li>
+    <div class="container">
+        <header>
+            <h1 class="site-title">XVIthk</h1>
+            <p class="site-subtitle">Fifteen 的暗黑文学仓库</p>
+        </header>
+
+        <div class="warning">
+            <strong>⚠️ 警告</strong>: 本站内容包含成人元素，请确保您已年满18岁并自愿承担阅读风险。
+        </div>
+
+        <main>
+            <ul class="works-list">
+                <li class="work-item">
+                    <div class="work-title">《d20》系列</div>
+                    <ul class="chapter-list">
+                        <li class="chapter-item"><a href="d20 - 01~07.pdf" class="chapter-link">d20 - part01</a></li>
+                        <li class="chapter-item"><a href="d20 - 08~10.pdf" class="chapter-link">d20 - part02</a></li>
+                        <li class="chapter-item"><a href="d20 - 11~14.pdf" class="chapter-link">d20 - part03</a></li>
+                        <li class="chapter-item"><a href="d20 - 15~18.pdf" class="chapter-link">d20 - part04</a></li>
+                        <li class="chapter-item"><a href="d20 - After18.pdf" class="chapter-link">d20 - allafter - part05</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 你可以在这里继续添加其他作品 -->
             </ul>
-        </li>
-        <!-- 添加其他作品 -->
-    </ul>
+        </main>
+
+        <footer>
+            <p>© 2024 Fifteen's Dark Literature Repository. 请理性阅读。</p>
+        </footer>
+    </div>
 </body>
 </html>
