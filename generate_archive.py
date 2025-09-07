@@ -3,7 +3,7 @@ import glob
 
 # ==================== 配置区域 ====================
 LOCAL_NOVELS_DIR = "novels"
-WEB_NOVELS_PATH = ""
+WEB_NOVELS_PATH = "novels/"
 TEMPLATE_PATH = "templates/archive_template.html"
 OUTPUT_PATH = "archive.html"
 
