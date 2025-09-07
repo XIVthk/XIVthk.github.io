@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XVIthk - Fifteen的文库</title>
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --text-primary: #e6edf3;
-            --text-secondary: #7d8590;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
+            /* 浅色主题变量 */
+            --bg-primary-light: #ffffff;
+            --bg-secondary-light: #f5f5f5;
+            --text-primary-light: #333333;
+            --text-secondary-light: #666666;
+            --accent-light: #58a6ff;
+            --accent-hover-light: #79c0ff;
+
+            /* 深色主题变量（保持你原来的配色） */
+            --bg-primary-dark: #0d1117;
+            --bg-secondary-dark: #161b22;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #7d8590;
+            --accent-dark: #58a6ff;
+            --accent-hover-dark: #79c0ff;
+
+            /* 默认使用深色主题 */
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
         }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --accent: var(--accent-light);
+            --accent-hover: var(--accent-hover-light);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-primary);
@@ -36,7 +67,8 @@
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid #30363d;
+            border-bottom: 1px solid var(--text-secondary);
+            position: relative;
         }
         .site-title {
             font-size: 2.5rem;
@@ -66,7 +98,7 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid #30363d;
+            border: 1px solid var(--text-secondary);
         }
         .work-item:hover {
             transform: translateY(-2px);
@@ -74,8 +106,8 @@
         }
         .work-title {
             padding: 1.2rem;
-            background-color: rgba(22, 27, 34, 0.8);
-            border-bottom: 1px solid #30363d;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--text-secondary);
             font-size: 1.3rem;
             display: flex;
             align-items: center;
@@ -91,7 +123,7 @@
         }
         .chapter-item {
             padding: 0.8rem 1.2rem;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            border-bottom: 1px solid var(--text-secondary);
         }
         .chapter-item:last-child {
             border-bottom: none;
@@ -116,7 +148,7 @@
             text-align: center;
             margin-top: 3rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #30363d;
+            border-top: 1px solid var(--text-secondary);
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
@@ -130,7 +162,7 @@
         }
         .nav-button {
             display: inline-block;
-            background-color: #58a6ff;
+            background-color: var(--accent);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 5px;
@@ -138,8 +170,30 @@
             margin-bottom: 1.5rem;
         }
         .nav-button:hover {
-            background-color: #79c0ff;
+            background-color: var(--accent-hover);
             text-decoration: none;
+        }
+        .theme-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
         }
     </style>
 </head>
@@ -147,6 +201,7 @@
     <div class="container">
         <header>
             <h1 class="site-title">XVIthk</h1>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
             <p class="site-subtitle">Fifteen 的文库</p>
             <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
         </header>
@@ -193,6 +248,45 @@
         <footer>
             <p>© 2025 Fifteen's Archive. 请理性阅读。</p>
         </footer>
+
+        <script>
+            // 获取切换按钮
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 检查本地存储中是否有保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                updateButtonText(savedTheme);
+            } else {
+                // 如果没有保存的偏好，默认使用深色主题
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateButtonText('dark');
+            }
+            
+            // 主题切换函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 应用新主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                
+                // 保存用户偏好
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新按钮文本
+                updateButtonText(newTheme);
+            }
+            
+            // 更新按钮显示
+            function updateButtonText(theme) {
+                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+            }
+            
+            // 添加点击事件监听
+            themeToggle.addEventListener('click', toggleTheme);
+        </script>
     </div>
 </body>
 </html>
