@@ -126,6 +126,21 @@
             background: var(--accent);
             color: white;
         }
+
+        /* 为主题切换添加平滑过渡效果 */
+        body, .container, header, footer, 
+        .work-item, .work-title, .chapter-item,
+        .author-words, .warning, table, th, td,
+        .theme-btn, .nav-button, .back-link {
+            transition: background-color 0.4s ease-in-out, 
+                        color 0.4s ease-in-out, 
+                        border-color 0.4s ease-in-out;
+        }
+
+        /* 确保按钮的变换动画不受影响 */
+        .theme-btn:hover, .nav-button:hover, .back-link:hover {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
