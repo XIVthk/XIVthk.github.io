@@ -1,20 +1,54 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html lang="zh" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>作品目录 - XVIthk</title>
     <style>
-        /* 继承你主页的蓝色主题 */
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --text-primary: #e6edf3;
-            --text-secondary: #7d8590;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
+            /* 浅色主题变量 */
+            --bg-primary-light: #ffffff;
+            --bg-secondary-light: #f5f5f5;
+            --text-primary-light: #333333;
+            --text-secondary-light: #666666;
+            --accent-light: #58a6ff;
+            --accent-hover-light: #79c0ff;
+
+            /* 深色主题变量（保持你原来的配色） */
+            --bg-primary-dark: #0d1117;
+            --bg-secondary-dark: #161b22;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #7d8590;
+            --accent-dark: #58a6ff;
+            --accent-hover-dark: #79c0ff;
+
+            /* 默认使用深色主题 */
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
         }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --accent: var(--accent-light);
+            --accent-hover: var(--accent-hover-light);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-primary);
@@ -26,6 +60,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
         }
         h1 {
             color: var(--accent);
@@ -52,10 +87,10 @@
         th, td {
             padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #30363d;
+            border-bottom: 1px solid var(--text-secondary);
         }
         th {
-            background-color: rgba(22, 27, 34, 0.8);
+            background-color: var(--bg-secondary);
             font-weight: 600;
         }
         tr:hover {
@@ -69,11 +104,33 @@
             color: var(--accent-hover);
             text-decoration: underline;
         }
+        .theme-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
+        }
     </style>
-</head>
 </head>
 <body>
     <div class="container">
+        <button id="theme-toggle" class="theme-btn">🌙</button>
         <a href="index.html" class="back-link">← 返回首页</a>
         <h1>📚 完整作品目录</h1>
 
@@ -89,6 +146,45 @@
                 <!-- TABLE_ROWS --> 
             </tbody>
         </table>
+
+        <script>
+            // 获取切换按钮
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 检查本地存储中是否有保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                updateButtonText(savedTheme);
+            } else {
+                // 如果没有保存的偏好，默认使用深色主题
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateButtonText('dark');
+            }
+            
+            // 主题切换函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 应用新主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                
+                // 保存用户偏好
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新按钮文本
+                updateButtonText(newTheme);
+            }
+            
+            // 更新按钮显示
+            function updateButtonText(theme) {
+                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+            }
+            
+            // 添加点击事件监听
+            themeToggle.addEventListener('click', toggleTheme);
+        </script>
     </div>
 </body>
 </html>
