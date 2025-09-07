@@ -18,17 +18,21 @@ jobs:
       - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13' # 明确指定你的Python版本
+          python-version: '3.13'
+
+      # 新增这一步：安装 Python 依赖
+      - name: Install dependencies
+        run: pip install jinja2  # 只需要这一条命令，安装你需要的库
 
       - name: Run generation scripts
         run: |
           python generate_archive.py
-          python generate_index.py  # 新增这一行，运行新的主页生成脚本
+          python generate_index.py
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add archive.html index.html
-          git commit -m "CI: Auto-update archive list [skip actions]" || echo "No changes to commit"
+          git commit -m "CI: Auto-update lists [skip actions]" || echo "No changes to commit"
           git push
