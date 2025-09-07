@@ -204,6 +204,51 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* 为浮动名片提供定位上下文 */
+        }
+
+        .author-card {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            z-index: 10;
+            /* 移除圆角，使用直角 */
+            border-radius: 0;
+            /* 添加一点阴影使其更突出 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* 添加透明度 */
+            opacity: 0.9;
+            /* 添加淡入动画 */
+            animation: fadeIn 1s ease-out;
+            /* 添加悬停效果 */
+            transition: all 0.3s ease;
+        }
+
+        /* 添加淡入动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        .author-card:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .author-content {
+            white-space: pre-line; /* 保留换行符 */
+            line-height: 1.6;
         }
 
         .author-words h1, .author-words h2, .author-words h3 {
@@ -249,6 +294,7 @@
 
         <!-- ▼▼▼ 作者的话栏目 ▼▼▼ -->
         <section class="author-words" id="author-words-container">
+            <div class="author-card">作者/Fifteen</div>
             <div class="loading-text">正在加载作者的最新唠叨...</div>
         </section>
         <!-- ▲▲▲ 作者的话栏目 ▲▲▲ -->
@@ -328,18 +374,19 @@
                     
                     // 直接显示原始文本（不解析Markdown）
                     const container = document.getElementById('author-words-container');
-                    container.innerHTML = `<div class="author-content">${markdownText}</div>`;
+                    container.querySelector('.loading-text').style.display = 'none';
+                    container.innerHTML += `<div class="author-content">${markdownText}</div>`;
                     
                 } catch (error) {
                     console.error('加载作者的话时出错:', error);
                     const container = document.getElementById('author-words-container');
-                    container.innerHTML = '<p>站长今天似乎没什么要说的。</p>';
+                    container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
                 }
             }
 
             // 页面加载完成后执行
             document.addEventListener('DOMContentLoaded', function() {
-                // 先加载作者的话
+                // 加载作者的话
                 loadAuthorsWords();
             });
             // ▲▲▲ 动态加载作者的话 ▲▲▲
