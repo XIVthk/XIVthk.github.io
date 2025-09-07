@@ -195,6 +195,47 @@
             background: var(--accent);
             color: white;
         }
+
+        /* ▼▼▼ 作者的话样式 ▼▼▼ */
+        .author-words {
+            background-color: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .author-words h1, .author-words h2, .author-words h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .author-words p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .author-words ul, .author-words ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-words li {
+            margin-bottom: 0.5rem;
+        }
+
+        .author-words a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .loading-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        /* ▲▲▲ 作者的话样式 ▲▲▲ */
     </style>
 </head>
 <body>
@@ -205,6 +246,12 @@
             <p class="site-subtitle">Fifteen 的文库</p>
             <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
         </header>
+
+        <!-- ▼▼▼ 作者的话栏目 ▼▼▼ -->
+        <section class="author-words" id="author-words-container">
+            <div class="loading-text">正在加载作者的最新唠叨...</div>
+        </section>
+        <!-- ▲▲▲ 作者的话栏目 ▲▲▲ -->
 
         <div class="warning">
             <strong>⚠️ 警告</strong>: 本站内容包含成人元素，请确保您已年满18岁并自愿承担阅读风险。
@@ -296,6 +343,34 @@
             
             // 添加点击事件监听
             themeToggle.addEventListener('click', toggleTheme);
+
+            // ▼▼▼ 动态加载作者的话 ▼▼▼
+            async function loadAuthorsWords() {
+                try {
+                    // 尝试获取 author-words.md 文件
+                    const response = await fetch('author-words.md');
+                    if (!response.ok) {
+                        throw new Error('文件加载失败');
+                    }
+                    const markdownText = await response.text();
+                    
+                    // 直接显示原始文本（不解析Markdown）
+                    const container = document.getElementById('author-words-container');
+                    container.innerHTML = `<div class="author-content">${markdownText}</div>`;
+                    
+                } catch (error) {
+                    console.error('加载作者的话时出错:', error);
+                    const container = document.getElementById('author-words-container');
+                    container.innerHTML = '<p>站长今天似乎没什么要说的。</p>';
+                }
+            }
+
+            // 页面加载完成后执行
+            document.addEventListener('DOMContentLoaded', function() {
+                // 先加载作者的话
+                loadAuthorsWords();
+            });
+            // ▲▲▲ 动态加载作者的话 ▲▲▲
         </script>
     </div>
 </body>
