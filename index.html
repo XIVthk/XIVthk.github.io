@@ -5,22 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XVIthk - Fifteen的文库</title>
     <style>
-        /* 深蓝色主题 */
         :root {
-            --bg-primary: #0d1117; /* 深蓝黑背景 */
-            --bg-secondary: #161b22; /* 稍浅的蓝黑 */
-            --text-primary: #e6edf3; /* 柔和的浅蓝文字 */
-            --text-secondary: #7d8590; /* 中性灰蓝色 */
-            --accent: #58a6ff; /* 明亮的蓝色链接 */
-            --accent-hover: #79c0ff; /* 悬停时更亮的蓝 */
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #7d8590;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
         }
-        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-primary);
@@ -30,36 +27,28 @@
             margin: 0;
             min-height: 100vh;
         }
-        
-        /* 布局容器 */
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
-        /* 页头样式 */
         header {
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 1.5rem;
             border-bottom: 1px solid #30363d;
         }
-        
         .site-title {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             color: var(--accent);
             letter-spacing: 1px;
         }
-        
         .site-subtitle {
             color: var(--text-secondary);
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
         }
-        
-        /* 警告提示 */
         .warning {
             background-color: rgba(88, 166, 255, 0.1);
             border-left: 4px solid var(--accent);
@@ -67,12 +56,9 @@
             margin-bottom: 2rem;
             border-radius: 0 4px 4px 0;
         }
-        
-        /* 作品列表样式 */
         .works-list {
             list-style: none;
         }
-        
         .work-item {
             background-color: var(--bg-secondary);
             border-radius: 8px;
@@ -82,12 +68,10 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: 1px solid #30363d;
         }
-        
         .work-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
-        
         .work-title {
             padding: 1.2rem;
             background-color: rgba(22, 27, 34, 0.8);
@@ -96,27 +80,22 @@
             display: flex;
             align-items: center;
         }
-        
         .work-title::before {
             content: "📖";
             margin-right: 0.8rem;
             font-size: 1.1rem;
         }
-        
         .chapter-list {
             list-style: none;
             padding: 0.5rem 0;
         }
-        
         .chapter-item {
             padding: 0.8rem 1.2rem;
             border-bottom: 1px solid rgba(48, 54, 61, 0.5);
         }
-        
         .chapter-item:last-child {
             border-bottom: none;
         }
-        
         .chapter-link {
             color: var(--text-primary);
             text-decoration: none;
@@ -124,19 +103,15 @@
             align-items: center;
             transition: color 0.2s ease;
         }
-        
         .chapter-link:hover {
             color: var(--accent-hover);
         }
-        
         .chapter-link::before {
             content: "→";
             margin-right: 0.8rem;
             color: var(--accent);
             font-weight: bold;
         }
-        
-        /* 页脚样式 */
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -145,20 +120,17 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        
-        /* 响应式设计 */
         @media (max-width: 600px) {
             .container {
                 padding: 1.5rem;
             }
-            
             .site-title {
                 font-size: 2rem;
             }
         }
         .nav-button {
             display: inline-block;
-            background-color: #58a6ff; /* 你的主题蓝色 */
+            background-color: #58a6ff;
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 5px;
@@ -166,7 +138,7 @@
             margin-bottom: 1.5rem;
         }
         .nav-button:hover {
-            background-color: #79c0ff; /* 悬停时变亮 */
+            background-color: #79c0ff;
             text-decoration: none;
         }
     </style>
@@ -185,19 +157,36 @@
 
         <main>
             <ul class="works-list">
+                <!-- 这个循环会为每个系列创建一个分组 -->
+                
                 <li class="work-item">
                     <div class="work-title">《d20》系列</div>
                     <ul class="chapter-list">
+                        <!-- 这个循环会为系列里的每个作品创建一个链接 -->
+                        
                         <li class="chapter-item"><a href="novels/d20 - 01~07.pdf" class="chapter-link">d20 - part01</a></li>
+                        
                         <li class="chapter-item"><a href="novels/d20 - 08~10.pdf" class="chapter-link">d20 - part02</a></li>
+                        
                         <li class="chapter-item"><a href="novels/d20 - 11~14.pdf" class="chapter-link">d20 - part03</a></li>
+                        
                         <li class="chapter-item"><a href="novels/d20 - 15~18.pdf" class="chapter-link">d20 - part04</a></li>
+                        
                         <li class="chapter-item"><a href="novels/d20 - After18.pdf" class="chapter-link">d20 - allafter - part05</a></li>
+                        
                     </ul>
                 </li>
                 
-                <!-- 可以在这里继续添加其他作品 -->
-
+                <li class="work-item">
+                    <div class="work-title">无题文章</div>
+                    <ul class="chapter-list">
+                        <!-- 这个循环会为系列里的每个作品创建一个链接 -->
+                        
+                        <li class="chapter-item"><a href="novels/oph - 无题.pdf" class="chapter-link">oph</a></li>
+                        
+                    </ul>
+                </li>
+                
             </ul>
         </main>
 
