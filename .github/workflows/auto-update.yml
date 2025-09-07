@@ -20,14 +20,15 @@ jobs:
         with:
           python-version: '3.13' # 明确指定你的Python版本
 
-      - name: Run generation script
-        run: python generate_archive.py
-        # 工作流的工作目录默认是仓库根目录，所以你的脚本能直接找到 ./novels 和 ./templates
+      - name: Run generation scripts
+        run: |
+          python generate_archive.py
+          python generate_index.py  # 新增这一行，运行新的主页生成脚本
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add archive.html
+          git add archive.html index.html
           git commit -m "CI: Auto-update archive list [skip actions]" || echo "No changes to commit"
           git push

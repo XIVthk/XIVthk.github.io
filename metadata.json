@@ -1,0 +1,34 @@
+{
+  "novels": [
+    {
+      "file_name": "d20 - 01~07.pdf",
+      "display_title": "d20 - part01",
+      "series": "《d20》系列"
+    },
+    {
+      "file_name": "d20 - 08~10.pdf",
+      "display_title": "d20 - part02",
+      "series": "《d20》系列"
+    },
+    {
+      "file_name": "d20 - 11~14.pdf",
+      "display_title": "d20 - part03",
+      "series": "《d20》系列"
+    },
+    {
+      "file_name": "d20 - 15~18.pdf",
+      "display_title": "d20 - part04",
+      "series": "《d20》系列"
+    },
+    {
+      "file_name": "d20 - After18.pdf",
+      "display_title": "d20 - allafter - part05",
+      "series": "《d20》系列"
+    },
+    {
+      "file_name": "oph - 无题.pdf",
+      "display_title": "oph",
+      "series": "无题文章"
+    }
+  ]
+}
