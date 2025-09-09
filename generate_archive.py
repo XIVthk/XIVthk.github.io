@@ -12,7 +12,6 @@ OUTPUT_PATH = "archive.html"
 
 def main():
     # 1. 获取所有PDF文件，并按文件名排序
-    # 注意：这里依然扫描本地目录
     novel_files = sorted(glob.glob(os.path.join(LOCAL_NOVELS_DIR, "*.pdf")))
     
     table_rows = []
@@ -20,18 +19,17 @@ def main():
         # 获取本地文件名（带novels/）
         local_file_name = os.path.basename(file_path)
         
-        # ！！！核心修改：构建网站上的文件路径 ！！！
-        # 如果WEB_NOVELS_PATH为空，则链接就是文件名本身。
-        # 例如：'d20 - 01~07.pdf'
-        web_file_path = os.path.join(WEB_NOVELS_PATH, local_file_name).replace('\\', '/')
+        # 核心修改：不再直接链接到PDF，而是链接到阅读页
+        base_name = local_file_name.replace('.pdf', '')
+        web_file_path = f"reading/{base_name}.html"  # 指向阅读页
         
         display_name = local_file_name.replace('.pdf', '')
         
-        # 构建一行的HTML代码：href 使用网站路径 web_file_path
+        # 构建一行的HTML代码
         row_html = f"""
         <tr>
             <td><strong>《{display_name}》</strong></td>
-            <td><a href="{web_file_path}" class="chapter-link">阅读全文</a></td>
+            <td><a href="{web_file_path}" class="chapter-link">在线阅读</a></td>
             <td>PDF</td>
         </tr>
         """
@@ -40,15 +38,16 @@ def main():
     # 3. 读取模板文件
     with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
         template_content = f.read()
-        
+    
     final_html = template_content.replace('<!-- TABLE_ROWS -->', '\n'.join(table_rows))
-        
+    
     with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
         f.write(final_html)
-        
+    
     print(f"✅ 成功生成！已输出至: {OUTPUT_PATH}")
     print(f"📊 共处理了 {len(novel_files)} 个小说文件。")
-    print(f"🌐 生成的链接已适配网站根目录路径。")
-    
+    print(f"🌐 生成的链接已指向阅读页面。")
+
+
 if __name__ == '__main__':
     main()

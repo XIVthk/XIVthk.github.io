@@ -27,10 +27,9 @@ jobs:
       - name: Run generation scripts
         run: |
           python generate_archive.py
-          # 强制运行 generate_index.py，无论文件是否有变化
           python generate_index.py
-          # 检查 index.html 是否有变化，如果有，则添加到提交中
-          git add archive.html index.html || echo "No changes to add"
+          python generate_text_pages.py  # 【改为运行新的文本页生成脚本】
+          git add archive.html index.html reading/* || echo "No changes to add"
 
       - name: Commit and push changes
         run: |
