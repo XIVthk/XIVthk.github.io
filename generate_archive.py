@@ -30,7 +30,7 @@ def main():
         <tr>
             <td><strong>《{display_name}》</strong></td>
             <td><a href="{web_file_path}" class="chapter-link">在线阅读</a></td>
-            <td>PDF</td>
+            <td>PDF/TXT</td>
         </tr>
         """
         table_rows.append(row_html)
