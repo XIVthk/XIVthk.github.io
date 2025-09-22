@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oph - 行为矫正 - XVIthk Reader</title>
+    <style>
+        /* 继承主站主题 */
+        :root {
+            --bg-primary-light: #ffffff;
+            --bg-secondary-light: #f5f5f5;
+            --text-primary-light: #333333;
+            --text-secondary-light: #666666;
+            --accent-light: #58a6ff;
+            --accent-hover-light: #79c0ff;
+
+            --bg-primary-dark: #0d1117;
+            --bg-secondary-dark: #161b22;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #7d8590;
+            --accent-dark: #58a6ff;
+            --accent-hover-dark: #79c0ff;
+
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --accent: var(--accent-light);
+            --accent-hover: var(--accent-hover-light);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        .reader-header {
+            background-color: var(--bg-secondary);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+        }
+
+        .reader-title {
+            color: var(--accent);
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dl-button, .back-link {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .dl-button:hover, .back-link:hover {
+            background-color: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        /* 核心：文本内容容器 */
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            white-space: pre-wrap; /* 保留换行和空格 */
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .font-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">oph - 行为矫正</h1>
+                <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+            <a href="../novels/oph - 行为矫正.pdf" class="dl-button" download>⬇️ 下载PDF</a>
+        </div>
+    </div>
+
+    <!-- 核心：文本内容将动态加载到这里 -->
+    <div class="text-content-container" id="text-content">
+        <p style="text-align: center; color: var(--text-secondary);">正在加载内容...</p>
+    </div>
+
+    <script>
+        // 动态加载TXT文件内容
+        fetch("../novels/oph - 行为矫正.txt")
+            .then(response => {
+                if (!response.ok) throw new Error('网络响应异常');
+                return response.text();
+            })
+            .then(text => {
+                // 将获取到的纯文本放入容器中
+                document.getElementById('text-content').innerText = text;
+            })
+            .catch(error => {
+                console.error('加载文本失败:', error);
+                document.getElementById('text-content').innerHTML = `
+                    <p style="color: lightcoral; text-align: center;">
+                        加载失败，请<a href="../novels/oph - 行为矫正.pdf" download>下载PDF</a>阅读。
+                    </p>
+                `;
+            });
+
+            // 获取切换按钮
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 检查本地存储中是否有保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                updateButtonText(savedTheme);
+            } else {
+                // 如果没有保存的偏好，默认使用深色主题
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateButtonText('dark');
+            }
+            
+            // 主题切换函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 应用新主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                
+                // 保存用户偏好
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新按钮文本
+                updateButtonText(newTheme);
+            }
+            
+            // 更新按钮显示
+            function updateButtonText(theme) {
+                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+            }
+            
+            // 添加点击事件监听
+            themeToggle.addEventListener('click', toggleTheme);
+
+        // 字体大小控制功能
+        const contentElement = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        // 初始化字体大小
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 16; // 默认16px
+        contentElement.style.fontSize = fontSize + 'px';
+        
+        // 字体大小调整函数
+        function adjustFontSize(change) {
+            fontSize += change;
+            // 限制字体大小范围
+            fontSize = Math.max(12, Math.min(24, fontSize));
+            contentElement.style.fontSize = fontSize + 'px';
+            localStorage.setItem('readerFontSize', fontSize);
+        }
+        
+        // 绑定按钮事件
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 16;
+            contentElement.style.fontSize = fontSize + 'px';
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        // 阅读进度保存
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            const percentage = Math.round((scrollPosition / pageHeight) * 100);
+            
+            // 使用页面URL作为键来存储进度
+            const pageKey = 'progress_' + window.location.pathname;
+            localStorage.setItem(pageKey, percentage);
+        }
+        
+        // 恢复阅读进度
+        function restoreReadingProgress() {
+            const pageKey = 'progress_' + window.location.pathname;
+            const savedProgress = localStorage.getItem(pageKey);
+            
+            if (savedProgress) {
+                const pageHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPosition = (savedProgress / 100) * pageHeight;
+                window.scrollTo(0, scrollPosition);
+                
+                // 显示恢复提示（可选）
+                const progressMsg = document.createElement('div');
+                progressMsg.textContent = `已恢复至 ${savedProgress}% 处`;
+                progressMsg.style.position = 'fixed';
+                progressMsg.style.top = '10px';
+                progressMsg.style.left = '50%';
+                progressMsg.style.transform = 'translateX(-50%)';
+                progressMsg.style.background = 'var(--accent)';
+                progressMsg.style.color = 'white';
+                progressMsg.style.padding = '5px 10px';
+                progressMsg.style.borderRadius = '5px';
+                progressMsg.style.zIndex = '1000';
+                document.body.appendChild(progressMsg);
+                
+                // 3秒后消失
+                setTimeout(() => progressMsg.remove(), 3000);
+            }
+        }
+        
+        // 监听滚动事件（节流处理）
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(saveReadingProgress, 1000);
+        });
+        
+        // 页面加载完成后恢复进度
+        document.addEventListener('DOMContentLoaded', restoreReadingProgress);
+    </script>
+</body>
+</html>
